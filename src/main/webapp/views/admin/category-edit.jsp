@@ -1,16 +1,72 @@
-<html>
-<head>
-    <title>Edit Category</title>
-</head>
-<body>
-<h1>Edit Category</h1>
-<form action="${pageContext.request.contextPath}/admin/category/update" method="post">
-    <input type="hidden" name="id" value="${category.id}">
-    <label for="name">Category Name:</label>
-    <input type="text" id="name" name="name" value="${category.name}" required>
-    <br>
-    <input type="submit" value="Update Category">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+
+         pageEncoding="UTF-8"%>
+
+
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+
+
+<form action="<c:url value='/admin/category/update'></c:url>" method="post"
+
+
+      enctype="multipart/form-data">
+
+
+    <%--@declare id="html"--%><%--@declare id="css"--%><%--@declare id="fname"--%><%--@declare id="lname"--%><input type="text" id="categoryid" name="categoryid" hidden="hidden" value="${cate.categoryId}"><br>
+
+
+    <label for="fname">Category name:</label><br>
+
+
+    <input type="text" id="categoryname" name="categoryname" value="${cate.categoryname}"><br>
+
+
+    <label for="lname">Images:</label><br>
+
+
+    <c:if test="${cate.images.substring(0 , 5)=='https'}">
+
+
+        <c:url value="${cate.images}" var="imgUrl"></c:url>
+
+
+    </c:if>
+
+
+    <c:if test="${cate.images.substring(0 , 5)!='https'}">
+
+
+        <c:url value="/image?fname=${cate.images }" var="imgUrl"></c:url>
+
+
+    </c:if>
+
+
+    <img id="imagess" height="150" width="200" src="${imgUrl}" />
+
+
+    <input type="file" onchange="chooseFile(this)" id="images" name="images" value="${cate.images}">
+
+
+    <p>Status:</p>
+
+
+    <input type="radio" id="ston" name="status" value="1" ${cate.status==1?'checked':'' } >
+
+
+    <label for="html">Đang hoạt động</label><br>
+
+
+    <input type="radio" id="stoff" name="status" value="0" ${cate.status!=1?'checked':'' }>
+
+
+    <label for="css">Khóa</label><br>
+
+
+    <input type="submit" value="Update">
+
+
 </form>
-<a href="${pageContext.request.contextPath}/admin/categories">Back to Category List</a>
-</body>
-</html>
+
